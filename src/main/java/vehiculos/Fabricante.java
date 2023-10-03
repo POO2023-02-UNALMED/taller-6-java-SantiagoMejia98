@@ -1,59 +1,54 @@
 package vehiculos;
+
 import java.util.*;
 
 public class Fabricante {
+	private static List<Fabricante> fabricantes = new ArrayList<>();
+	private List<Vehiculo> vehiculos = new ArrayList<>();
+	private String nombre;
+	private Pais pais;
 	
-	protected String nombre;
-	protected Pais pais;
-	protected static ArrayList<Fabricante> fabricantes = new ArrayList<Fabricante>();
-	protected int cantidadVendidos=0;
-
-	protected Fabricante(String nombre, Pais pais) {
-		this.nombre = nombre;
-		this.pais = pais;
-		fabricantes.add(this);
+	
+	public Fabricante(String nombre, Pais pais) {
+		this.nombre=nombre;
+		setPais(pais);
+		Fabricante.fabricantes.add(this);
 	}
 	
-	protected String getNombre() {
+	public String getNombre() {
 		return nombre;
 	}
-	protected void setNombre(String nombre) {
+	
+	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 	
-	protected Pais getPais() {
+	public Pais getPais() {
 		return pais;
 	}
-	protected void setPais(Pais pais) {
+	
+	public void setPais(Pais pais) {
 		this.pais = pais;
+		pais.anadirFabrica(this);
 	}
 	
-	protected int getCantidadVehiculos() {
-		return cantidadVendidos;
-	}
-	protected void setCantidadVehiculos(int cantidadVehiculos) {
-		this.cantidadVendidos = cantidadVehiculos;
-	}
-
-	protected static List<Fabricante> getFabricantes() {
-		return fabricantes;
-	}
-
-	protected static void setFabricantes(ArrayList<Fabricante> fabricantes) {
-		Fabricante.fabricantes = fabricantes;
+	public void anadirVehiculo(Vehiculo vehiculo) {
+		this.vehiculos.add(vehiculo);
 	}
 	
-	protected static Fabricante fabricaMayorVentas() {
-		int vendidos = 0;
-		Fabricante Vendedor = null;
-		
-		for (int i = 0; i<Fabricante.fabricantes.size(); i++){
-			int x = Fabricante.fabricantes.get(i).cantidadVendidos;
-			if (vendidos < x) {
-				vendidos = x;
-				Vendedor = Fabricante.fabricantes.get(i);
+	public static Fabricante fabricaMayorVentas() {
+		Fabricante mayorVendedor = null;
+		int ventasMaximas = 0;
+		for (Fabricante fabricante: Fabricante.fabricantes) {
+			if (fabricante.vehiculos.size() > ventasMaximas) {
+				mayorVendedor = fabricante;
+				ventasMaximas = fabricante.vehiculos.size();
 			}
 		}
-		return Vendedor;
+		return mayorVendedor;
+	}
+	
+	public int vehiculos() {
+		return (this.vehiculos.size());
 	}
 }
