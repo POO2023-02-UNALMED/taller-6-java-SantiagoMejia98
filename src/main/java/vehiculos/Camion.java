@@ -1,6 +1,6 @@
 package vehiculos;
 
-public class Camion extends vehiculo {
+public class Camion extends Vehiculo {
 
 	protected int ejes;
 	
